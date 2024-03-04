@@ -179,9 +179,91 @@ public class DataUtilitiesTest extends TestCase {
 	 * 2.1.3 Testing: createNumberArray(double[] data)
 	 */
     
+    @Test
+    public void testCreateNumberArrayWithValidInput() {
+        double[] input = {3.0, 23.0, 321.0, 91.0, 15.0};
+        double[] expectedOutput = {3.0, 23.0, 321.0, 91.0, 15.0};
+        
+        Number[] result = DataUtilities.createNumberArray(input);
+
+        double[] actualOutput = new double[result.length];
+        for (int i = 0; i < result.length; i++) {
+            // Check if the individual elements are not null
+            assertNotNull("Array element at index " + i + " should not be null", result[i]);
+            actualOutput[i] = result[i].doubleValue();
+        }
+        
+        // Using Assert with fully qualified name in case of import issues
+        assertArrayEquals(expectedOutput, actualOutput, 0.001);
+    }
+    
+    @Test
+    public void testCreateNumberArrayWithNullInput() {
+    	try {
+    		DataUtilities.createNumberArray(null);
+            fail("Expected an IllegalArgumentException to be thrown");
+        } catch (IllegalArgumentException e) {
+            /// Expected exception, test passes
+        }
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNumberArrayWithEmptyArray() {
+        double[] input = {};
+        DataUtilities.createNumberArray(input);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNumberArrayWithNonDoublePrimitives() {
+        double[] input = {23, 5454.39, -39, -42};
+        DataUtilities.createNumberArray(input);
+    }
+    
     /* 
 	 * 2.1.4 Testing: createNumberArray2D(double[][] data)
 	 */
+    @Test
+    public void testCreateNumberArray2DWithValidInput() {
+        double[][] input = {
+            {78.0, 99.0, 32.0, 55.0, 15.0},
+            {14.0, 25.0, 45.0, 59.0, 74.0}
+        };
+        double[][] expectedOutput = {
+            {78.0, 99.0, 32.0, 55.0, 15.0},
+            {14.0, 25.0, 45.0, 59.0, 74.0}
+        };
+        assertArrayEquals(expectedOutput, DataUtilities.createNumberArray2D(input));
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNumberArray2DWithEmptyArray() {
+        double[][] input = new double[0][];
+        DataUtilities.createNumberArray2D(input);
+    }
+    
+    @Test
+    public void testCreateNumberArray2DWithNullInput() {
+    	try {
+    		DataUtilities.createNumberArray2D(null);
+    	}catch(IllegalArgumentException e) {
+    		/// Expected exception, test passes
+    	}
+    	
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNumberArray2DWithMixedTypes() {
+    	try {
+    		double[][] input = new double[][] {
+                {78.0, 99.0, 32, 55.0f, 15.0},
+                {14.0, 25.0, -45, 59.0, 74.0}
+            };
+            DataUtilities.createNumberArray2D(input);
+    	}catch(IllegalArgumentException e) {
+    		/// Expected exception, test passes
+    	}
+         // This method would need to accept Object[][] and handle casting internally.
+    }
     
     /* 
 	 * 2.1.5 Testing: getCumulativePercentages(KeyedValues data)

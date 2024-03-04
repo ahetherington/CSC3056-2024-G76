@@ -124,6 +124,55 @@ public class DataUtilitiesTest extends TestCase {
     /* 
 	 * 2.1.2 Testing: calculateColumnTotal(Values2D data, int column) 
 	 */
+    
+    
+    @Test
+    public void testCalculateRowTotalValid() {
+    	DefaultKeyedValues2D values = new DefaultKeyedValues2D();
+        values.addValue(5.7, 0, 0);
+        values.addValue(8.5, 0, 1);
+        values.addValue(7.9, 0, 2);
+        double result = DataUtilities.calculateRowTotal(values, 0);
+        assertEquals("The row total is not correct", 22.1, result, 0.0000001d);
+    }
+
+    @Test
+    public void testCalculateRowTotalWithInvalidRow() {
+    	DefaultKeyedValues2D values = new DefaultKeyedValues2D();
+        values.addValue(5.7, 0, 0);
+        values.addValue(8.5, 0, 1);
+        values.addValue(7.9, 0, 2);
+        try {
+            DataUtilities.calculateRowTotal(values, 5);
+            fail("Should have thrown IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException e) {
+	        // Expected exception, test passes
+	    }
+    }
+
+    @Test
+    public void testCalculateRowTotalWithNullData() {
+        try {
+            DataUtilities.calculateRowTotal(null, 0);
+            fail("Should have thrown NullPointerException");
+        } catch (NullPointerException e) {
+	        // Expected exception, test passes
+	    }
+    }
+
+    @Test
+    public void testCalculateRowTotalWithEmptyData() {
+        Values2D values = new DefaultKeyedValues2D();
+        double result = DataUtilities.calculateRowTotal(values, 0);
+        assertEquals("The row total of an empty data set should be zero", 0.0, result, 0.0000001d);
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testCalculateRowTotalWithNegativeRow() {
+        Values2D values = new DefaultKeyedValues2D();
+        DataUtilities.calculateRowTotal(values, -1); 
+    }
+
 }
 
 

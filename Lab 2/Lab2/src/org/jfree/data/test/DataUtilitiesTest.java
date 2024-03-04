@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import java.security.InvalidParameterException;
 
 import org.jfree.data.DataUtilities;
+import org.jfree.data.DefaultKeyedValues;
 import org.jfree.data.DefaultKeyedValues2D;
+import org.jfree.data.KeyedValues;
 import org.jfree.data.Values2D;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -173,6 +175,56 @@ public class DataUtilitiesTest extends TestCase {
         DataUtilities.calculateRowTotal(values, -1); 
     }
 
+    /* 
+	 * 2.1.3 Testing: createNumberArray(double[] data)
+	 */
+    
+    /* 
+	 * 2.1.4 Testing: createNumberArray2D(double[][] data)
+	 */
+    
+    /* 
+	 * 2.1.5 Testing: getCumulativePercentages(KeyedValues data)
+	 */
+    
+    @Test
+    public void testGetCumulativePercentagesWithValidData() {
+        DefaultKeyedValues data = new DefaultKeyedValues();
+        data.addValue((Comparable<Integer>)0, 2);
+        data.addValue((Comparable<Integer>)1, 6);
+        data.addValue((Comparable<Integer>)2, 3);
+        data.addValue((Comparable<Integer>)3, 6);
+        data.addValue((Comparable<Integer>)4, 2);
+        KeyedValues result = DataUtilities.getCumulativePercentages(data);
+        assertEquals(0.1053, result.getValue(0).doubleValue(), 0.0001d);
+        assertEquals(0.4211, result.getValue(1).doubleValue(), 0.0001d);
+        assertEquals(0.5789, result.getValue(2).doubleValue(), 0.0001d);
+        assertEquals(0.8947, result.getValue(3).doubleValue(), 0.0001d);
+        assertEquals(1.0, result.getValue(4).doubleValue(), 0.0001d);
+    }
+
+    @Test
+    public void testGetCumulativePercentagesWithNullData() {
+    	try {
+    		DataUtilities.getCumulativePercentages(null);            
+    		fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+	        // Expected exception, test passes
+	    }
+       
+    }
+
+    @Test
+    public void testGetCumulativePercentagesWithEmptyData() {
+        // Setup
+        DefaultKeyedValues data = new DefaultKeyedValues();
+        
+        // Execution
+        KeyedValues result = DataUtilities.getCumulativePercentages(data);
+        
+        // The result should be empty and not throw an error
+        assertTrue(result.getItemCount() == 0);
+    }
 }
 
 

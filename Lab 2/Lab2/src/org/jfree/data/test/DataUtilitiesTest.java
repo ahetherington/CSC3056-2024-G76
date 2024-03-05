@@ -138,7 +138,7 @@ public class DataUtilitiesTest extends TestCase {
 	}
 
 	@Test
-	public void testCalculateRowTotalWithInvalidRow() {
+	public void testCalculateRowTotalWithOutOfBoundsRow() {
 		DefaultKeyedValues2D values = new DefaultKeyedValues2D();
 		values.addValue(5.7, 0, 0);
 		values.addValue(8.5, 0, 1);
@@ -169,7 +169,7 @@ public class DataUtilitiesTest extends TestCase {
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
-	public void testCalculateRowTotalWithNegativeRow() {
+	public void testCalculateRowTotalWithEmptyDataNegativeRow() {
 		Values2D values = new DefaultKeyedValues2D();
 		DataUtilities.calculateRowTotal(values, -1);
 	}

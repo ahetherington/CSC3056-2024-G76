@@ -44,10 +44,17 @@ public class RangeTest extends TestCase{
 		assertEquals(-94.0, range.getLowerBound(), 0.0001);
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test
 	public void testGetLowerBoundWithNullRange() {
-		Range range = null;
-		range.getLowerBound();
+	    try {
+	        Range range = null;
+	        range.getLowerBound();
+	        fail("Expected NullPointerException to be thrown when calling getLowerBound() on a null range.");
+	    } catch (NullPointerException e) {
+	        
+	    } catch (Exception e) {
+	        fail("Unexpected exception type thrown: " + e.getClass().getSimpleName());
+	    }
 	}
 
 	@Test
@@ -224,9 +231,17 @@ public class RangeTest extends TestCase{
         assertEquals("Expanding a range with large expansion factors should yield a significantly expanded range", expected, actual);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testExpand_NullRange() {
-        Range.expand(null, 0.1, 0.2);
+        try {
+            Range.expand(null, 0.1, 0.2);
+            fail("Expected IllegalArgumentException to be thrown when expanding a null range.");
+        } catch (IllegalArgumentException e) {
+            // This is expected, so the test passes.
+        } catch (Exception e) {
+            // If any other exception is thrown, the test will fail.
+            fail("Unexpected exception type thrown: " + e.getClass().getSimpleName());
+        }
     }
 
 	/*
@@ -240,11 +255,17 @@ public class RangeTest extends TestCase{
 		assertTrue("Ranges should intersect", range1.intersects(range2.getLowerBound(), range2.getUpperBound()));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testIntersectsPositiveRangesLBRGreaterOrEqualUBR() {
-		Range range1 = new Range(7.0, 2.0);
-		Range range2 = new Range(3.0, 8.0);
-		range1.intersects(range2.getLowerBound(), range2.getUpperBound());
+	    try {
+	        Range range1 = new Range(7.0, 2.0); 
+	        Range range2 = new Range(3.0, 8.0);
+	        range1.intersects(range2.getLowerBound(), range2.getUpperBound());
+	        fail("Expected IllegalArgumentException to be thrown due to invalid range bounds.");
+	    } catch (IllegalArgumentException e) {
+	    } catch (Exception e) {
+	        fail("Unexpected exception type thrown: " + e.getClass().getSimpleName());
+	    }
 	}
 
 	@Test
@@ -261,14 +282,18 @@ public class RangeTest extends TestCase{
 		assertTrue("Ranges should intersect", range1.intersects(range2.getLowerBound(), range2.getUpperBound()));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testIntersectsNegativeRangesLBRGreaterOrEqualUBR() {
-		Range range1 = new Range(-5.0, -10.0);
-		Range range2 = new Range(-8.0, -4.0);
-		range1.intersects(range2.getLowerBound(), range2.getUpperBound());
-
+	    try {
+	        Range range1 = new Range(-5.0, -10.0);
+	        Range range2 = new Range(-8.0, -4.0);
+	        range1.intersects(range2.getLowerBound(), range2.getUpperBound());
+	        fail("Expected IllegalArgumentException to be thrown.");
+	    } catch (IllegalArgumentException e) {
+	        // Test passes if exception is caught
+	    }
 	}
-
+	
 	@Test
 	public void testIntersectsNegativeRangesLBREqualUBR() {
 		Range range1 = new Range(-6.0, -6.0);

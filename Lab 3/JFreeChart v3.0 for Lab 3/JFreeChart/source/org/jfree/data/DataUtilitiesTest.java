@@ -320,5 +320,29 @@ public class DataUtilitiesTest extends TestCase {
         assertEquals(0.8947, result.getValue(3).doubleValue(), 0.0001d);
         assertEquals(1.0, result.getValue(4).doubleValue(), 0.0001d);
     }
+    
+    
+     //Lab 3: Additional Test Cases:
+     
+    /*
+     * getCumulativePercentages(KeyedValues data) - ROKAS
+     */
+    @Test
+    public void testGetCumulativePercentagesWithFewNullValues() {
+        DefaultKeyedValues data = new DefaultKeyedValues();
+        data.addValue((Comparable<Integer>) 0, 2);
+        data.addValue((Comparable<Integer>) 1, null);
+        data.addValue((Comparable<Integer>) 2, 3);
+        data.addValue((Comparable<Integer>) 3, 6);
+        data.addValue((Comparable<Integer>) 4, null);
+        KeyedValues result = DataUtilities.getCumulativePercentages(data);
+        assertEquals(0.1818, result.getValue(0).doubleValue(), 0.0001d);
+        assertEquals(0.1818, result.getValue(1).doubleValue(), 0.0001d); 
+        assertEquals(0.4545, result.getValue(2).doubleValue(), 0.0001d);
+        assertEquals(1.0, result.getValue(3).doubleValue(), 0.0001d);
+        assertEquals(1.0, result.getValue(4).doubleValue(), 0.0001d); 
+    }
+    
+    
 }
 

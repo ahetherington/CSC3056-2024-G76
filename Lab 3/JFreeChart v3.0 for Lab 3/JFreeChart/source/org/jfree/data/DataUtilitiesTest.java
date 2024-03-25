@@ -320,7 +320,7 @@ public class DataUtilitiesTest extends TestCase {
         assertEquals(0.8947, result.getValue(3).doubleValue(), 0.0001d);
         assertEquals(1.0, result.getValue(4).doubleValue(), 0.0001d);
     }
-    
+   
     
      //Lab 3: Additional Test Cases:
      
@@ -342,7 +342,7 @@ public class DataUtilitiesTest extends TestCase {
         assertEquals(1.0, result.getValue(3).doubleValue(), 0.0001d);
         assertEquals(1.0, result.getValue(4).doubleValue(), 0.0001d); 
     }
-    
+   
     /*
      * calculateRowTotal(Values2D data, int row) - ROKAS
      */

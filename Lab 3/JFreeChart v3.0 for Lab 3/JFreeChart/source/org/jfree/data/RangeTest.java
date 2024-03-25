@@ -315,4 +315,111 @@ public class RangeTest extends TestCase{
 		assertFalse("Ranges should not intersect", range1.intersects(range2.getLowerBound(), range2.getUpperBound()));
 	}
 
+	
+	//Lab 3 Additional Test Cases
+	
+	/*
+	 *  equals(object) - ROKAS
+	 */
+	@Test
+	public void testEqualsWithMismatchedUpperBounds() {
+	    Range range1 = new Range(1.0, 2.0);
+	    Range range2 = new Range(1.0, 3.0); 
+	    assertFalse("Ranges with different upper bounds should not be equal", range1.equals(range2));
+	}
+	
+	@Test
+	public void testEqualsWithIdenticalBounds() {
+	    Range range1 = new Range(1.0, 2.0);
+	    Range range2 = new Range(1.0, 2.0); 
+	    assertTrue("Ranges with identical bounds should be equal", range1.equals(range2));
+	}
+
+	/*
+	 * contains(double) - ROKAS
+	 */
+	
+	@Test
+    public void testContainsValueInRange() {
+        Range range = new Range(5.0, 20.0);
+        assertTrue(range.contains(7.0));
+    }
+
+    @Test
+    public void testContainsLowerBound() {
+        Range range = new Range(5.0, 15.0);
+        assertTrue(range.contains(5.0));
+    }
+
+    @Test
+    public void testContainsUpperBound() {
+        Range range = new Range(7.0, 10.0);
+        assertTrue(range.contains(10.0));
+    }
+
+    @Test
+    public void testContainsBelowRange() {
+        Range range = new Range(1.0, 10.0);
+        assertFalse(range.contains(-5.0));
+    }
+
+    @Test
+    public void testContainsAboveRange() {
+        Range range = new Range(3.0, 25.0);
+        assertFalse(range.contains(35.0));
+    }
+
+
+    @Test
+    public void testContainsNegativeValue() {
+        Range range = new Range(-5.0, 5.0);
+        assertTrue(range.contains(-3.0));
+        assertTrue(range.contains(3.0));
+    }
+    
+    /*
+	 * constrain(double) - ROKAS
+	 */
+    
+    @Test
+    public void testConstrainInRange() {
+        Range range = new Range(50.0, 150.0);
+        assertEquals(100.0, range.constrain(100.0), 0.001);
+    }
+
+    @Test
+    public void testConstrainBelowRange() {
+        Range range = new Range(20.0, 80.0);
+        assertEquals(20.0, range.constrain(10.0), 0.001);
+    }
+
+    @Test
+    public void testConstrainAboveRange() {
+        Range range = new Range(0.0, 50.0);
+        assertEquals(50.0, range.constrain(100.0), 0.001);
+    }
+
+    @Test
+    public void testConstrainAtLowerBound() {
+        Range range = new Range(0.0, 100.0);
+        assertEquals(0.0, range.constrain(0.0), 0.001);
+    }
+
+    @Test
+    public void testConstrainAtUpperBound() {
+        Range range = new Range(10.0, 110.0);
+        assertEquals(110.0, range.constrain(120.0), 0.001);
+    }
+
+    @Test
+    public void testConstrainValueInRangeDecimal() {
+        Range range = new Range(25.0, 75.0);
+        assertEquals(45.3, range.constrain(45.3), 0.001);
+    }
+	
+    @Test
+    public void testConstrainLessThanLowerBound() {
+        Range range = new Range(10.0, 100.0);
+        assertEquals(10.0, range.constrain(5.0), 0.001);
+    }
 }

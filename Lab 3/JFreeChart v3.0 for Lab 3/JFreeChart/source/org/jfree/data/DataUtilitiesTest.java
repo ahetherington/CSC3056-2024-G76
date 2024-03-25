@@ -343,6 +343,33 @@ public class DataUtilitiesTest extends TestCase {
         assertEquals(1.0, result.getValue(4).doubleValue(), 0.0001d); 
     }
     
+    /*
+     * calculateRowTotal(Values2D data, int row) - ROKAS
+     */
     
+    @Test
+    public void testCalculateRowTotalWithFewNullValues() {
+        DefaultKeyedValues2D values = new DefaultKeyedValues2D();
+        values.addValue(5.7, 0, 0);
+        values.addValue(null, 0, 1); 
+        values.addValue(7.9, 0, 2);
+        double result = DataUtilities.calculateRowTotal(values, 0);
+        assertEquals("The row total should register any nulls as zero", 13.6, result, 0.0000001d);
+    }
+    
+    /*
+     * calculateColumnTotal(Values2D data, int column) - ROKAS
+     */
+    
+    @Test
+    public void testCalculateColumnTotalWithFewNullValues() {
+        DefaultKeyedValues2D values = new DefaultKeyedValues2D();
+        values.addValue(1.0, 0, 0);
+        values.addValue(null, 1, 0); 
+        values.addValue(3.0, 2, 0);
+        double result = DataUtilities.calculateColumnTotal(values, 0);
+        assertEquals("The column total should register any nulls as zero", 4.0, result, 0.0000001d);
+    }
+
 }
 

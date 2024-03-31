@@ -422,4 +422,71 @@ public class RangeTest extends TestCase{
         Range range = new Range(10.0, 100.0);
         assertEquals(10.0, range.constrain(5.0), 0.001);
     }
+    
+    /*
+	 * 	shift(Range base, double delta, boolean allowZeroCrossing) - ROKAS
+	 */
+   
+    @Test
+    public void testShiftCrossingZeroWithPositiveDelta() {
+        Range base = new Range(-1.0, 1.0);
+        Range expected = new Range(0.0, 0.0);
+        Range result = Range.shift(base, 2.0, false);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testShiftCrossingZeroWithNegativeDelta() {
+        Range base = new Range(1.0, 3.0);
+        Range expected = new Range(0.0, 0.0);
+        Range result = Range.shift(base, -2.0, false);
+        assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testShiftNoCrossingZeroWithPositiveDelta() {
+        Range base = new Range(2.0, 4.0);
+        Range expected = new Range(2.0, 4.0);
+        Range result = Range.shift(base, 1.0, false);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testShiftNoCrossingZeroWithNegativeDelta() {
+        Range base = new Range(-4.0, -2.0);
+        Range expected = new Range(-4.0, -2.0);
+        Range result = Range.shift(base, -1.0, false);
+        assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testShiftWithNullRange() {
+        try {
+            Range.shift(null, 4.0, false);
+            fail("Expected IllegalArgumentException to be thrown when shifting a null range.");
+        } catch (IllegalArgumentException e) {
+            // Expected exception, test should pass.
+        } catch (Exception e) {
+            fail("Unexpected exception type thrown: " + e.getClass().getSimpleName());
+        }
+    }
+    
+    @Test
+    public void testShiftAllowZeroCrossingPositiveDelta() {
+        Range base = new Range(1.0, 3.0);
+        double delta = 2.0;
+        Range expected = new Range(base.getLowerBound() + delta, base.getUpperBound() + delta);
+        Range result = Range.shift(base, delta, true);
+        assertEquals("Shifting to the right with positive delta changes the range when zero crossing is allowed", expected, result);
+    }
+
+    @Test
+    public void testShiftAllowZeroCrossingNegativeDelta() {
+        Range base = new Range(1.0, 3.0);
+        double delta = -0.5;
+        Range expected = new Range(base.getLowerBound() + delta, base.getUpperBound() + delta);
+        Range result = Range.shift(base, delta, true);
+        assertEquals("Shifting to the left with negative delta changes the range when zero crossing is allowed", expected, result);
+    }
+
 }

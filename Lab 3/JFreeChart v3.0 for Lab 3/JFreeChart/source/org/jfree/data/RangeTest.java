@@ -319,7 +319,7 @@ public class RangeTest extends TestCase{
 	//Lab 3 Additional Test Cases
 	
 	/*
-	 *  equals(object) - ROKAS
+	 *  equals(object) 
 	 */
 	@Test
 	public void testEqualsWithMismatchedUpperBounds() {
@@ -336,7 +336,7 @@ public class RangeTest extends TestCase{
 	}
 
 	/*
-	 * contains(double) - ROKAS
+	 * contains(double) 
 	 */
 	
 	@Test
@@ -378,9 +378,9 @@ public class RangeTest extends TestCase{
     }
     
     /*
-	 * constrain(double) - ROKAS
+	 * constrain(double) 
 	 */
-    
+   
     @Test
     public void testConstrainInRange() {
         Range range = new Range(50.0, 150.0);
@@ -424,9 +424,9 @@ public class RangeTest extends TestCase{
     }
     
     /*
-	 * 	shift(Range base, double delta, boolean allowZeroCrossing) - ROKAS
+	 * 	shift(Range base, double delta, boolean allowZeroCrossing) 
 	 */
-   
+  
     @Test
     public void testShiftCrossingZeroWithPositiveDelta() {
         Range base = new Range(-1.0, 1.0);

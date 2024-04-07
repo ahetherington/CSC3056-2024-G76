@@ -325,7 +325,7 @@ public class DataUtilitiesTest extends TestCase {
      //Lab 3: Additional Test Cases:
      
     /*
-     * getCumulativePercentages(KeyedValues data) - ROKAS
+     * getCumulativePercentages(KeyedValues data) 
      */
     @Test
     public void testGetCumulativePercentagesWithFewNullValues() {
@@ -344,7 +344,7 @@ public class DataUtilitiesTest extends TestCase {
     }
    
     /*
-     * calculateRowTotal(Values2D data, int row) - ROKAS
+     * calculateRowTotal(Values2D data, int row) 
      */
     
     @Test
@@ -358,7 +358,7 @@ public class DataUtilitiesTest extends TestCase {
     }
     
     /*
-     * calculateColumnTotal(Values2D data, int column) - ROKAS
+     * calculateColumnTotal(Values2D data, int column) 
      */
     
     @Test
